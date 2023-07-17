@@ -45,4 +45,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
-        script: whoami
+        script: |
+          docker login --username=${{ secrets.DOCKERHUB_USERNAME }} --password=${{ secrets.DOCKERHUB_TOKEN }}
+          docker pull johnojss/container-api-server:${{ github.run_number }}
+          docker run --name api-server. -d -p 8000:8000 johnojss/container-api-server:${{ github.run_number }}
