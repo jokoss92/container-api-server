@@ -10,7 +10,7 @@ on:
 jobs:
 
   build-docker-and-push:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
 
@@ -36,7 +36,7 @@ jobs:
 
   deploy-container-to-vm:
     name: Deploy container image to VM
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: build-docker-and-push
     steps:
     - name: executing remote ssh commands using ssh key
@@ -54,7 +54,7 @@ jobs:
 
   send-notif-to-discord:
     name: Send notification to Discord channel
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: deploy-container-to-vm
     steps:
       - name: Discord notification
