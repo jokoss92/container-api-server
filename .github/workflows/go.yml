@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  build-docker:
+  build-docker-and-push:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -34,3 +34,15 @@ jobs:
         push: true
         tags: johnojss/container-api-server:${{ github.run_number }}
 
+  deploy-container-to-vm:
+    name: Deploy container image to VM
+    runs-on: ubuntu-latest
+    needs: build-docker-and-push
+    steps:
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        script: whoami
