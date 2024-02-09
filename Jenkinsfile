@@ -1,8 +1,17 @@
 pipeline {
     agent any
+    environment {
+        name = 'container-api-server'
+    }
     stages {
+        stage('Info') {
+            steps {
+                echo 'Pipeline name: $name'
+            }
+        }
         stage('Clone Repository'){
             steps {
+                sh 'rm -rf container-api-server/*'
                 sh 'git clone https://github.com/jokoss92/container-api-server.git'
             }
         }
