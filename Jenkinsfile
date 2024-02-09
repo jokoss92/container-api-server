@@ -1,12 +1,12 @@
 pipeline {
     agent any
     environment {
-        name = 'container-api-server'
+        NAME = 'container-api-server'
     }
     stages {
         stage('Info') {
             steps {
-                echo 'Pipeline name: $name'
+                echo 'Pipeline name: $NAME'
                 sh 'go version'
             }
         }
@@ -18,6 +18,7 @@ pipeline {
         }
         stage('Build'){
             steps {
+               sh 'docker stop api-server && docker rm api-server && docker rmi api-server'
                sh 'docker build -t api-server .'
             }
         }
