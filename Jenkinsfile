@@ -24,7 +24,7 @@ pipeline {
          stage('Run app'){
             steps {
                 sh 'chmod +x api-server'
-                sh './api-server'
+                sh './api-server &'
             }
         }
     }
