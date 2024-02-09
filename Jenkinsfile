@@ -18,13 +18,12 @@ pipeline {
         }
         stage('Build'){
             steps {
-               sh 'go build -o api-server '
+               sh 'docker build -t api-server .'
             }
         }
          stage('Run app'){
             steps {
-                sh 'chmod +x api-server'
-                sh './api-server &'
+                sh 'docker run -d -p 8000:8000 --name api-server api-server'
             }
         }
     }
