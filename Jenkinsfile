@@ -32,16 +32,20 @@ pipeline {
     }
      post {
             always {
-                 echo 'Jobs triggered'
+                echo 'Jobs triggered'
+                discordSend description: "Jenkins Pipeline Build", footer: "Jobs triggered", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1205535354665443489/OyGBhMDMJhZ5Y7xfdc7HYjUzLCsgLrbnGHtWB2Gt7oRiVXSZ9wDc0m5WvcX91c8YdEYZ"
             }
             success {
                  echo 'Jobs success'
+                 discordSend description: "Jenkins Pipeline Build", footer: "Jobs success", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1205535354665443489/OyGBhMDMJhZ5Y7xfdc7HYjUzLCsgLrbnGHtWB2Gt7oRiVXSZ9wDc0m5WvcX91c8YdEYZ"
             }
             failure {
-                 echo 'Jobs failure'
+                echo 'Jobs failure'
+                discordSend description: "Jenkins Pipeline Build", footer: "Jobs failure", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1205535354665443489/OyGBhMDMJhZ5Y7xfdc7HYjUzLCsgLrbnGHtWB2Gt7oRiVXSZ9wDc0m5WvcX91c8YdEYZ"
             }
             aborted {
-                 echo 'Jobs aborted'
+                echo 'Jobs aborted'
+                discordSend description: "Jenkins Pipeline Build", footer: "Jobs aborted", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1205535354665443489/OyGBhMDMJhZ5Y7xfdc7HYjUzLCsgLrbnGHtWB2Gt7oRiVXSZ9wDc0m5WvcX91c8YdEYZ"
             }
         }
 }
