@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Clone Repository'){
             steps {
-                sh 'rm -rf container-api-server/*'
+                sh 'rm -rf container-api-server'
                 sh 'git clone https://github.com/jokoss92/container-api-server.git'
             }
         }
