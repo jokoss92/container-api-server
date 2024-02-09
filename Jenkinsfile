@@ -2,11 +2,13 @@ pipeline {
     agent any
     environment {
         NAME = 'container-api-server'
+        TOKEN = credentials('token')
     }
     stages {
         stage('Info') {
             steps {
                 echo 'Pipeline name: $NAME'
+                sh 'echo $TOKEN >> token.txt'
                 sh 'go version'
             }
         }
