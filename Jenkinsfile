@@ -1,5 +1,6 @@
 pipeline {
-    agent any {
+    agent {
+    any
     // Install the desired Go version
     def root = tool name: 'Go 1.20', type: 'go'
 
