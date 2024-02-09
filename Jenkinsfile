@@ -29,5 +29,19 @@ pipeline {
                 sh 'docker run -d -p 8000:8000 --name api-server api-server'
             }
         }
+        post {
+            always {
+                 echo 'Jobs triggered'
+            }
+            success {
+                 echo 'Jobs success'
+            }
+            failure {
+                 echo 'Jobs failure'
+            }
+            aborted {
+                 echo 'Jobs aborted'
+            }
+        }
     }
 }
