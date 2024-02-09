@@ -1,14 +1,5 @@
 pipeline {
-    agent {
-    any
-    // Install the desired Go version
-    def root = tool name: 'Go 1.20', type: 'go'
-
-    // Export environment variables pointing to the directory where Go was installed
-    withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]) {
-        sh 'go version'
-        }
-    }
+    agent any
     environment {
         name = 'container-api-server'
     }
@@ -16,6 +7,7 @@ pipeline {
         stage('Info') {
             steps {
                 echo 'Pipeline name: $name'
+                sh 'go version'
             }
         }
         stage('Clone Repository'){
