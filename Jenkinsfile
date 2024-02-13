@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Build'){
             steps {
-               sh 'docker stop api-server && docker rm api-server && docker rmi api-server'
+               sh 'docker stop api-server; docker rm api-server; docker rmi api-server;'
                sh 'docker build -t api-server .'
             }
         }
