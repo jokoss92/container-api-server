@@ -15,12 +15,16 @@ pipeline {
         }
         stage('Build'){
             steps {
-               sh 'docker build -t us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server .'
+               sh 'docker build -t us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server:$(BUILD_NUMBER) .'
             }
         }
          stage('Push to GCR'){
+            environment {
+               GCP_AUTH = credentials('gcp-sa')
+            }
             steps {
-                sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server'
+                sh 'cat GCP-AUTH | docker login -u _json_key --password-stdin https://us-central1-docker-docker.pkg.dev'
+                sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server:$(BUILD_NUMBER)'
             }
         }
     }
