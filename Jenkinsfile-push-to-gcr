@@ -15,6 +15,7 @@ pipeline {
         }
         stage('Build'){
             steps {
+               echo 'Build image'
                sh 'docker build -t us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server:${BUILD_NUMBER} .'
             }
         }
@@ -23,6 +24,7 @@ pipeline {
                GCP_AUTH = credentials('gcp-sa')
             }
             steps {
+                echo 'Push Image to GCR'
                 sh 'cat "$GCP-AUTH" | docker login -u _json_key --password-stdin https://us-central1-docker-docker.pkg.dev'
                 sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server:${BUILD_NUMBER}'
             }
