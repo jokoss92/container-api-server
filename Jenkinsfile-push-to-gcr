@@ -1,6 +1,8 @@
 
 pipeline {
-    agent any
+    agent {
+        label 'agent01'
+    }
     environment {
         NOTIF = credentials('notif-discord')
     }
