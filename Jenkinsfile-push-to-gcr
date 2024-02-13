@@ -25,8 +25,8 @@ pipeline {
             }
             steps {
                 echo 'Push Image to GCR'
-                sh 'cat "$GCP_AUTH" | docker login -u _json_key --password-stdin https://us-central1-docker-docker.pkg.dev'
-                sh 'gcloud auth configure-docker us-central1-docker-docker.pkg.dev'
+                sh 'cat "$GCP_AUTH" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev'
+                //sh 'gcloud auth configure-docker us-central1-docker.pkg.dev'
                 sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server:${BUILD_NUMBER}'
             }
         }
