@@ -2,18 +2,9 @@
 pipeline {
     agent any
     environment {
-        NAME = 'container-api-server'
-        TOKEN = credentials('token')
         NOTIF = credentials('notif-discord')
     }
     stages {
-        stage('Info') {
-            steps {
-                echo 'Pipeline name: $NAME'
-                sh 'echo $TOKEN >> token.txt'
-                sh 'go version'
-            }
-        }
         stage('Clone Repository'){
             steps {
                 sh 'rm -rf container-api-server'
