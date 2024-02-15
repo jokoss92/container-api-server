@@ -49,4 +49,11 @@ pipeline {
                 discordSend description: "Jenkins Pipeline Build", footer: "Jobs aborted ${BUILD_NUMBER}", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "$NOTIF"
             }
         }
+        stage('Deploy using Helm'){
+            steps {
+               echo 'Deploy using Helm'
+               sh 'helm repo add adhithia-charts https://adhithia21.github.io/helm-charts/charts'
+               sh 'helm install app adhithia-charts/application'
+            }
+        }
 }
