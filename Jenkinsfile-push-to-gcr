@@ -26,15 +26,21 @@ pipeline {
             steps {
                 echo 'Push Image to GCR'
                 sh 'cat "$GCP_AUTH" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev'
-                //sh 'gcloud auth configure-docker us-central1-docker.pkg.dev'
                 sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server:${BUILD_NUMBER}'
             }
         }
         stage('Deploy using Helm'){
+            environment {
+               GCP_AUTH = credentials('gcp-sa')
+            }
             steps {
                echo 'Deploy using Helm'
-               sh 'helm repo add adhithia-charts https://adhithia21.github.io/helm-charts/charts'
-               sh 'helm install app adhithia-charts/application'
+               sh 'cat "$GCP_AUTH" > gcp-sa.json'
+               sh 'gcloud auth activate-service-account $(cat gcp-sa.json | jq -r .client_email) --key-file=gcp-sa.json'
+               sh 'gcloud auth list'
+               sh 'gcloud container clusters get-credentials deploy-jenkins --zone us-central1-c --project powerful-unison-413810'
+               sh 'helm repo add joko-charts https://adhithia21.github.io/helm-charts/charts'
+               sh 'helm install app joko-charts/application'
             }
         }
     }
