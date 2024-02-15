@@ -6,6 +6,6 @@ spec:
   selector:
     app: api-server
   ports:
-    - port: 8000
+    - port: 80
       targetPort: 8000
   type: LoadBalancer
