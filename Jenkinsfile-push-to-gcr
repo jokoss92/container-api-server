@@ -42,6 +42,7 @@ pipeline {
                sh 'helm repo add joko-charts https://adhithia21.github.io/helm-charts/charts'
                sh 'helm upgrade --install app joko-charts/application'
                //sh 'kubectl create secret docker-registry gcr-io --docker-server gcr.io --docker-username _json_key --docker-email joko.ss.devsecops10@gmail.com --docker-password="$(cat gcp-sa.json)"'
+               //sh 'kubectl -n=example patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-io"}]}''
                sh 'kubectl apply -f deployment.yml && kubectl rollout restart deployment/api-server'
                sh 'kubectl apply -f service.yml'
             }
