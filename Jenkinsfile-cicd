@@ -18,14 +18,14 @@ pipeline {
         stage('Build'){
             steps {
                echo 'Build image'
-               sh 'docker build -t us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server .'
+               sh 'docker build -t us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server:${BUILD_NUMBER} .'
             }
         }
          stage('Push to Artifact Registry'){
             steps {
                 echo 'Push to Artifact Registry'
                 sh 'cat "$GCP_AUTH" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev'
-                sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server'
+                sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server:${BUILD_NUMBER}'
             }
         }
     }
