@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: api-server
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        editor: vscode
+    spec:
+      containers:
+      - name: api-server
+        image: us-central1-docker.pkg.dev/powerful-unison-413810/studidevsecops/api-server:latest
+  imagePullSecrets:
+  - name: gcr-io
