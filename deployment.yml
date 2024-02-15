@@ -2,12 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api-server
+  labels:
+    app: api-server
 spec:
   replicas: 3
+  selector:
+    matchLabels:
+      app: api-server
   template:
     metadata:
       labels:
-        editor: vscode
+        app: api-server
     spec:
       containers:
       - name: api-server
