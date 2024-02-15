@@ -5,6 +5,7 @@ pipeline {
     environment {
         NAME = 'container-api-server'
         NOTIF = credentials('notif-discord')
+        GCP_AUTH = credentials('gcp-sa-key')
     }
     stages {
         stage('Clone Repository'){
@@ -23,7 +24,8 @@ pipeline {
          stage('Push to Artifact Registry'){
             steps {
                 echo 'Push to Artifact Registry'
-                sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server .'
+                sh 'cat "$GCP_AUTH" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev'
+                sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server'
             }
         }
     }
