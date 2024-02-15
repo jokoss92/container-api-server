@@ -37,6 +37,7 @@ pipeline {
                 sh 'gcloud container clusters get-credentials deploy-jenkins --zone us-central1-c --project powerful-unison-413810'
                 sh 'helm repo add joko-charts https://adhithia21.github.io/helm-charts/charts'
                 sh 'helm upgrade --install app joko-charts/application'
+                sh "sed -i 's/api-server:/api-server:${BUILD_NUMBER}/g' deployment.yml"
                 sh 'kubectl apply -f deployment.yml && kubectl apply -f service.yml'
             }
         }
