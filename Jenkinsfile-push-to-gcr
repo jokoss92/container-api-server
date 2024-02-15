@@ -40,7 +40,7 @@ pipeline {
                sh 'gcloud auth list'
                sh 'gcloud container clusters get-credentials deploy-jenkins --zone us-central1-c --project powerful-unison-413810'
                sh 'helm repo add joko-charts https://adhithia21.github.io/helm-charts/charts'
-               sh 'helm install app joko-charts/application'
+               sh 'helm upgrade --install app joko-charts/application'
             }
         }
     }
