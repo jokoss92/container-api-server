@@ -21,11 +21,22 @@ pipeline {
                sh 'docker build -t us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server:${BUILD_NUMBER} .'
             }
         }
-         stage('Push to Artifact Registry'){
+        stage('Push to Artifact Registry'){
             steps {
                 echo 'Push to Artifact Registry'
                 sh 'cat "$GCP_AUTH" | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev'
                 sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server:${BUILD_NUMBER}'
+            }
+        }
+        stage('Deploy to K8s'){
+            steps {
+                echo 'Deploy to K8S'
+                sh 'cat "$GCP_AUTH" > gcp-sa.json'
+                sh 'gcloud auth activate-service-account $(cat gcp-sa.json | jq -r .client_email) --key-file=gcp-sa.json --project=$(cat gcp-sa.json | jq -r .project_id)'
+                sh 'gcloud auth list'
+                sh 'gcloud container clusters get-credentials deploy-jenkins --zone us-central1-c --project powerful-unison-413810'
+                sh 'helm repo add joko-charts https://adhithia21.github.io/helm-charts/charts'
+                sh 'helm upgrade --install app adhithia-charts/application'
             }
         }
     }
