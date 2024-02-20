@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'agent01'
-    }
+    agent any
     environment {
         NAME = 'container-api-server'
         NOTIF = credentials('notif-discord')
@@ -28,7 +26,7 @@ pipeline {
                 sh 'docker push us-central1-docker.pkg.dev/powerful-unison-413810/batch10/api-server:${BUILD_NUMBER}'
             }
         }
-        stage('Deploy to K8s'){
+        /** stage('Deploy to K8s'){
             steps {
                 echo 'Deploy to K8S'
                 sh 'cat "$GCP_AUTH" > gcp-sa.json'
@@ -39,6 +37,13 @@ pipeline {
                 sh 'helm upgrade --install app joko-charts/application'
                 sh "sed -i 's/api-server:/api-server:${BUILD_NUMBER}/g' deployment.yml"
                 sh 'kubectl apply -f deployment.yml && kubectl apply -f service.yml'
+            }
+        }
+        **/
+        stage('Trigger Update Manifest'){
+            steps {
+                echo 'Trigger Update Manifest'
+                build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
             }
         }
     }
