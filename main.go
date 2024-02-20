@@ -12,7 +12,7 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"code":    200,
-			"message": "api server v17",
+			"message": "api server v18",
 			"server":  hostname,
 			"author":  "Joko",
 		})
